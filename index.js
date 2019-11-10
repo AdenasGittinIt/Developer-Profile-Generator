@@ -1,68 +1,82 @@
 const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
-let userName = "AdenasGittinIt"
+const html = require("./generateHTML");
+const util = require("util");
+const writeFileAsync = util.promisify(fs.writeFile);
 
+// function promptUser() {
+//   return
+    inquirer.prompt([{
+    type: "input",
+    message: "What is your GitHub Username?",
+    name: "inputUsername"
+  }, {
+    type: "input",
+    message: "What is your favorite color?",
+    name: "faveColor"
+  }
+  ])  
+      .then(function(name){
+      console.log(name.inputUsername, name.faveColor )
 
-inquirer.prompt([{
-  type: "input",
-  message: "What is your GitHub Username?",
-  name: "inputUsername"
-}, {
-  type: "input",
-  message: "What is your favorite color?",
-  name: "faveColor"
-}
-]).then(function(name){
-  console.log(name.inputUsername, name.faveColor )
+      userName = name.inputUsername
 
-  userName = name.inputUsername
+      axios
+      .get(`https://api.github.com/users/${userName}`)
+      .then(function (res) {
 
-  axios
-  .get(`https://api.github.com/users/${userName}`)
-  .then(function (res) {
+      info = {
+        color: name.faveColor,
+        followers: res.data.followers,
+        following: res.data.following,
+        repos: res.data.public_repos,
+        location: res.data.location,
+        profilePic: res.data.avatar_url,
+        profileUrl: res.data.html_url,
+        blog: res.data.blog,
+        bio: res.data.bio,
+        name: res.data.name,
+      }  
+      
+      console.log(info)
 
-let followers = res.data.followers;
-let following = res.data.following;
-let publicRepos = res.data.public_repos;
-let location = res.data.location;
-let profilePic = res.data.avatar_url;
-let profileUrl = res.data.html_url;
-let blogUrl = res.data.blog;
-let bio = res.data.bio;
-let name = res.data.name;
+    });
 
-console.log(res);
-  console.log(
-    name, 
-    location, 
-    bio,
-    publicRepos, 
-    followers, 
-    following,  
-    profilePic, 
-    profileUrl, 
-    blogUrl);
-  });
+    let countStars = 0
 
-  let countStars = 0
-  axios
-  .get(`https://api.github.com/users/${userName}/repos`)
-  .then(function (res) {
+    axios
+    .get(`https://api.github.com/users/${userName}/repos`)
+    
+    .then(function (res) {
   
-    let i = 0
-    while(i < res.data.length){
+      let i = 0
+      while(i < res.data.length){
+        countStars = countStars + res.data[i++].stargazers_count
+      }
+
+      info.stars = countStars
+      console.log(info);
       
-      countStars = countStars + res.data[i++].stargazers_count
       
-    }
- 
-    console.log(countStars);
- 
-  });
+      generateHTML(info);
+      
+    });
 
-})
+  })
+// }
+// // google npm html to pdf
 
+// promptUser()
+//   .then(function(answers) {
+//     const html = generateHTML(answers);
 
+//     return writeFileAsync("index.html", html);
+//   })
+//   .then(function() {
+//     console.log("Successfully wrote to index.html");
+//   })
+//   .catch(function(err) {
+//     console.log(err);
+//   });
 
-// google npm html to pdf

@@ -37,3 +37,7 @@
 
 //I'll have to append the href to buttons on the HTML
 //I'll need to confirm that that is working.
+
+
+// Right now my APIs are functioning as expected. 
+//
