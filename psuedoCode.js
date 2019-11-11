@@ -10,9 +10,9 @@
 //DONE run the api call
 //DONE when I get the response save the required info to variables
 
-//create a template literal for an HTML page that plugs in all the variables from the API call
-//linke the template literal to the index.js populate it with the appropriate variables
-//use npm html to pdf to and or fs write file to do the same thing a pdf from the template literal
+//PROVIDED create a template literal for an HTML page that plugs in all the variables from the API call
+//DONE - ISH link the template literal to the index.js populate it with the appropriate variables
+
 //write those variables to a pdf file with the favorite color as the background
 
 
@@ -40,4 +40,7 @@
 
 
 // Right now my APIs are functioning as expected. 
-//
+// The response from each API is populating an object. 
+// I need to plug in the values from the returned object to my HTLM template literal
+// I need to use fs write file to create the HTML file.
+// once the html file is created I need to convert it and write it to a pdf file

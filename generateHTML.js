@@ -1,7 +1,3 @@
-const fs = require("fs");
-const util = require("util");
-const writeFileAsync = util.promisify(fs.writeFile);
-
 const colors = {
   green: {
     wrapperBackground: "#E6E1C3",
@@ -174,11 +170,5 @@ function generateHTML(data) {
             zoom: .75; 
           } 
          }
-      </style>
-      <body>
-         
-      </body>`
-     
+      </style>`
         }
-        
-  module.exports = { generateHTML }
