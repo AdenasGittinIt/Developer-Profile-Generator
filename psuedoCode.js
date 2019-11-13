@@ -41,6 +41,8 @@
 
 // Right now my APIs are functioning as expected. 
 // The response from each API is populating an object. 
-// I need to plug in the values from the returned object to my HTLM template literal
-// I need to use fs write file to create the HTML file.
-// once the html file is created I need to convert it and write it to a pdf file
+// DONE I need to plug in the values from the returned object to my HTLM template literal
+// DONE I need to use fs write file to create the HTML file.
+// DONE once the html file is created I need to convert it and write it to a pdf file
+
+//I think everything is on my PDF... just need to style it.

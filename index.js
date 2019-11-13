@@ -1,8 +1,10 @@
 const inquirer = require("inquirer");
-const fs = require("fs");
+const fs = require("fs"),
+  convertFactory = require('electron-html-to');
 const axios = require("axios");
 const util = require("util");
 const writeFileAsync = util.promisify(fs.writeFile);
+
 
 function promptUser() {
   return inquirer.prompt([{
@@ -16,6 +18,8 @@ function promptUser() {
   }
   ]);  
 }
+
+let readyToConvert = false;
 
 promptUser()
   .then(function(name) {
@@ -39,21 +43,49 @@ promptUser()
         name: res.data.name,
       }  
       
-      console.log(info);
+      // console.log(info);
       
       const html = generateHTML(info);
-
-      return writeFileAsync("index.html", html);
+      writeFileAsync(`${userName}.html`, html);
+      return generatePdf(html);
       
     });    
   })
   .then(function() {
-    console.log("Successfully wrote to index.html");
-  })
-  .catch(function(err) {
+    console.log(`${userName}.html is ready to convert to PDF`);
+    readyToConvert = true;
+  })  
+    .catch(function(err) {
     console.log(err);
+
   });
 
+
+  function generatePdf(html) {
+    let conversion = convertFactory({
+
+      converterPath: convertFactory.converters.PDF
+
+    });
+
+    conversion({
+      html: html,
+      waitForJs: true,
+      waitForJsVarName: readyToConvert,
+    },
+      function(err, result) {
+        if (err) {
+          return console.log(err);
+        }
+
+        result.stream.pipe(fs.createWriteStream(`${userName}.pdf`));
+        
+        conversion.kill(); 
+        
+        console.log(`${userName}.pdf is now available in your current directory`);
+      });
+    }
+  
 
   const colors = {
     green: {
@@ -232,13 +264,13 @@ promptUser()
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
             <h1 class="display-4">Hi! My name is ${info.name}</h1>
-            <p class="lead">${info.location}.</p>
-            <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
+            <h2>A Little About Me: <span class="badge badge-secondary">${info.bio}</span></h2>
             <ul class="list-group">
               <li class="list-group-item">location ${info.location}</li>
               <li class="list-group-item">GitHub: ${info.profileUrl}</li>
               <li class="list-group-item">Blog: ${info.blog}</li>
             </ul>
+            <img src='${info.profilePic}' height='200px' width='200px'>
           </div>
         </div>
        </body>    
