@@ -91,13 +91,15 @@ promptUser()
       const generateHTML = require("./generateHTML")
       const html = generateHTML(info);
       console.log(info);
-      return writeFileAsync("index.html", html);
+      writeFileAsync(`${userName}.html`, html);
+      return generatePdf(html)
      
 
     })
   })
   .then(function() {
-    console.log("sucessfully wrote to index.html");
+    console.log(`${userName}.html is ready to convert to PDF`);
+    readyToConvert = true;
   })
   .catch(function(err) {
     console.log(err);
