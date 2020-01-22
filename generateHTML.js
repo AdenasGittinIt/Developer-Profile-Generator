@@ -43,16 +43,20 @@ function generateHTML(data) {
   <body>
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
+      <img src='${info.profilePic}' height='200px' width='200px'>
         <h1 class="display-4">Hi! My name is ${info.name}</h1>
-        <h2>A Little About Me: <span class="badge badge-secondary">${
-          info.bio
-        }</span></h2>
         <ul class="list-group">
-          <li class="list-group-item">location ${info.location}</li>
-          <li class="list-group-item">GitHub: ${info.profileUrl}</li>
-          <li class="list-group-item">Blog: ${info.blog}</li>
+        <li class="list-group-item">location ${info.location}</li>
+        <li class="list-group-item">GitHub: ${info.profileUrl}</li>
+        <li class="list-group-item">Blog: ${info.blog}</li>
         </ul>
-        <img src='${info.profilePic}' height='200px' width='200px'>
+        <h2><span class="badge badge-secondary">${info.bio}</span></h2>
+        <ul class="list-group">
+        <li class="list-group-item">Public Repositories: ${info.repos}</li>
+        <li class="list-group-item">Followers: ${info.followers}</li>
+        <li class="list-group-item">GitHub Stars: ${info.stars}</li>
+        <li class="list-group-item">GitHub Following: ${info.folowing}</li>
+        </ul>
       </div>
     </div>
   </body>
