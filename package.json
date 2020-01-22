@@ -1,7 +1,7 @@
 {
   "name": "pull_it_together",
   "version": "1.0.0",
-  "description": "",
+  "description": "command line app to generate a GitHub profile pdf",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,16 +10,16 @@
     "type": "git",
     "url": "git+https://github.com/AdenasGittinIt/Pull_It_Together.git"
   },
-  "author": "",
+  "author": "Adena McGibbon",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AdenasGittinIt/Pull_It_Together/issues"
   },
   "homepage": "https://github.com/AdenasGittinIt/Pull_It_Together#readme",
   "dependencies": {
-    "axios": "^0.19.0",
-    "electron": "^7.1.1",
+    "axios": "^0.19.1",
     "electron-html-to": "^2.6.0",
-    "inquirer": "^7.0.0"
+    "inquirer": "^7.0.3",
+    "util": "^0.12.1"
   }
 }
